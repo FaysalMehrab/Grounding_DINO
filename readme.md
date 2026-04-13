@@ -1,25 +1,25 @@
-````md
-# GroundingDINO Image Annotation
+# GroundingDINO Image Annotation (CPU Setup)
 
 This project runs GroundingDINO on a single image and saves the annotated output.
 
-## Requirements
+---
 
-- Python 3.10 or 3.12
-- CPU is supported
-- GroundingDINO installed in editable mode
-- PyTorch, OpenCV, Transformers
+## Requirements
+- Python 3.10+ (CPU supported)
+- Ubuntu/Linux recommended
+- GroundingDINO repo cloned
+
+---
 
 ## Setup
 
-Create and activate a virtual environment:
-
+### 1. Create virtual environment
 ```bash
 python3 -m venv .grounding_dino_env
 source .grounding_dino_env/bin/activate
 ````
 
-Install dependencies:
+### 2. Install dependencies
 
 ```bash
 pip install --upgrade pip setuptools wheel
@@ -29,13 +29,31 @@ pip install transformers==4.36.2
 pip install -e . --no-build-isolation
 ```
 
-## Files
+---
 
-* `groundingdino/config/GroundingDINO_SwinB_cfg.py`
-* `weights/groundingdino_swinb_cogcoor.pth`
-* `assets/nid_45.png`
+## Download Pre-trained Weights
 
-## Run
+### Option 1: Swin-T (lightweight)
+
+```bash
+mkdir -p weights
+cd weights
+wget -q https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha/groundingdino_swint_ogc.pth
+cd ..
+```
+
+### Option 2: Swin-B (recommended accuracy)
+
+```bash
+mkdir -p weights
+cd weights
+wget -q https://huggingface.co/ShilongLiu/GroundingDINO/resolve/main/groundingdino_swinb_cogcoor.pth
+cd ..
+```
+
+---
+
+## Run Inference
 
 ```python
 from groundingdino.util.inference import load_model, load_image, predict, annotate
@@ -43,6 +61,11 @@ import cv2
 
 DEVICE = "cpu"
 
+# For Swin-T
+# model = load_model("groundingdino/config/GroundingDINO_SwinT_OGC.py", "weights/groundingdino_swint_ogc.pth", device=DEVICE)
+
+
+# For Swin-B
 model = load_model(
     "groundingdino/config/GroundingDINO_SwinB_cfg.py",
     "weights/groundingdino_swinb_cogcoor.pth",
@@ -76,9 +99,9 @@ cv2.imwrite("annotated_image_swinb.jpg", annotated_frame)
 print("Saved successfully")
 ```
 
-## Output
+---
 
-The annotated image will be saved as:
+## Output
 
 ```bash
 annotated_image_swinb.jpg
