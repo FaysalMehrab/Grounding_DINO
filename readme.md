@@ -31,8 +31,7 @@ Runs GroundingDINO on a single image and saves the annotated output. Supports bo
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/IDEA-Research/GroundingDINO.git
-cd GroundingDINO
+git clone https://github.com/FaysalMehrab/Grounding_DINO.git
 ```
 
 ---
