@@ -164,3 +164,17 @@ The annotated image is saved to:
 ```
 annotated_image_swinb.jpg
 ```
+
+
+## 🙏 Acknowledgements
+
+This project is built on top of the following open-source work:
+
+- GroundingDINO by IDEA-Research  
+  https://github.com/IDEA-Research/GroundingDINO
+  
+- Original paper:  
+  Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection  
+  https://arxiv.org/abs/2303.05499
+  
+Special thanks to the authors for releasing the code and pretrained models.
