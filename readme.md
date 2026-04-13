@@ -13,6 +13,11 @@ This project runs GroundingDINO on a single image and saves the annotated output
 
 ## Setup
 
+### 1. Clone the git repo
+```bash
+git clone https://github.com/IDEA-Research/GroundingDINO.git
+````
+
 ### 1. Create virtual environment
 ```bash
 python3 -m venv .grounding_dino_env
