@@ -163,7 +163,97 @@ The annotated image is saved to:
 ```
 annotated_image_swinb.jpg
 ```
+# Grounding DINO via Autodistill (Optional Alternative)
 
+This directory contains an implementation of **Grounding DINO** using the **Autodistill** framework.  
+While a raw implementation of Grounding DINO is available, this version is provided as an optional alternative for users who prefer a high-level API integrated with the **Supervision** ecosystem.
+
+---
+
+## 🚀 Why Use This Version?
+
+The Autodistill wrapper simplifies the *Teacher–Student* workflow and provides several quality-of-life improvements over the raw repository:
+
+- **Simplified Ontology**  
+  Easily map complex text prompts to clean class names using the `CaptionOntology` dictionary.
+
+- **Supervision Integration**  
+  Native support for `supervision (sv)` objects, enabling easier NMS, filtering, and professional-grade annotations.
+
+- **Automatic Weight Handling**  
+  Automatically manages model configuration and weight downloading — no manual path setup required.
+
+- **Hallucination Filtering**  
+  Built-in logic to filter out oversized detections ("giant boxes") based on image area ratios.
+
+---
+
+## 📦 Installation
+
+Install the required packages:
+
+```bash
+pip install autodistill-grounding-dino supervision
+```
+
+---
+
+## ⚡ Quick Start
+
+The core logic revolves around the `CaptionOntology`, which defines what to detect and how to label it.
+
+```python
+from autodistill_grounding_dino import GroundingDINO
+from autodistill.detection import CaptionOntology
+
+# Define detection ontology
+ontology = CaptionOntology({
+    "the pointed front section of the airplane": "head",
+    "airplane engine": "engine"
+})
+
+# Initialize model
+model = GroundingDINO(ontology=ontology)
+
+# Run inference
+results = model.predict("image.jpg")
+```
+
+---
+
+## 🔑 Key Features in This Implementation
+
+- **2-Phase Detection (Animals)**  
+  Prevents class confusion (e.g., detecting a "beak" on a dog) by:
+  1. Classifying the animal  
+  2. Applying a specific part-based ontology
+
+- **Class-Aware NMS**  
+  Ensures overlapping detections from different classes (e.g., eye inside head) are not suppressed.
+
+- **Area-Based Filtering**  
+  Removes detections exceeding a defined percentage of the image size to reduce false positives.
+
+---
+
+## ⚖️ When to Use This vs. Raw Grounding DINO?
+
+| Feature         | Raw Implementation         | Autodistill Version        |
+|----------------|---------------------------|----------------------------|
+| **Control**     | Maximum (low-level access) | High (standardized API)    |
+| **Setup**       | Manual config & weights    | Automatic                  |
+| **Visualization** | Manual OpenCV             | Supervision annotators     |
+| **Speed**       | Slightly faster runtime    | Better for batch labeling  |
+
+---
+
+## 📝 Note
+
+This implementation is **optional**.
+
+If your research or production pipeline requires **low-level control over the Grounding DINO architecture**, refer to the raw implementation available in the adjacent directory.
+
+---
 
 ## 🙏 Acknowledgements
 
